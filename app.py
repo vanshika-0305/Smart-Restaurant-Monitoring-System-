@@ -79,7 +79,24 @@ with st.sidebar:
     
     confidence = st.slider("Detection Confidence", 0.1, 1.0, 0.5, 0.05)
     
-   
+# Performance settings
+    st.header("Performance Settings")
+    frame_skip = st.slider("Frame Skip", 1, 10, 3, 
+                           help="Process 1 frame out of every N frames. Higher values = faster but less smooth.")
+    
+    st.header("Statistics")
+    col1, col2, col3 = st.columns(3)
+    
+    clean_count = col1.metric("Clean Tables", "0", "Available")
+    occupied_count = col2.metric("Occupied", "0", "In Use")
+    dirty_count = col3.metric("Dirty Tables", "0", "Need Cleaning")
+    
+    st.divider()
+    st.subheader("Table Status")
+    
+    clean_tables = st.container()
+    occupied_tables = st.container()
+    dirty_tables = st.container()
 
 # Tabs for Live Detection and About
 tab1, tab2 = st.tabs(["Live Detection", "About"])
@@ -310,6 +327,14 @@ with tab1:
             process_webcam()
         elif source_radio == "Upload Video" and st.session_state.uploaded_file is not None:
             process_uploaded_video(st.session_state.uploaded_file)
+
+with tab2:
+    st.header("About This System")
+    st.markdown("""
+    Smart Cafe Table Detection System for Cafe 96
+    
+    This application uses computer vision to help cafe staff monitor table status in real-time.
+    """)
 
 
 # Footer
