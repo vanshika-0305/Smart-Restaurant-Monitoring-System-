@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smart Cafe Table Detection</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <span class="logo">🍽️</span>
+      <div>
+        <h1>Smart Cafe Table Detection</h1>
+        <p>YOLOv8-powered table status monitoring &mdash; upload an image or video to run detection</p>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="panel controls-panel">
+      <div class="tabs">
+        <button class="tab-btn active" data-tab="image">🖼️ Image</button>
+        <button class="tab-btn" data-tab="video">🎬 Video</button>
+      </div>
+
+      <form id="image-form" class="upload-form" data-tab-panel="image">
+        <label class="dropzone" id="image-dropzone" for="image-input">
+          <input type="file" id="image-input" name="file" accept="image/png,image/jpeg,image/jpg" hidden />
+          <span class="dropzone-icon">📤</span>
+          <span class="dropzone-text">Drag &amp; drop an image, or click to browse</span>
+          <span class="dropzone-filename" id="image-filename"></span>
+        </label>
+
+        <div class="settings-row">
+          <div class="setting">
+            <label for="image-confidence">Confidence: <span id="image-confidence-value">0.20</span></label>
+            <input type="range" id="image-confidence" min="0.05" max="1" step="0.05" value="0.2" />
+          </div>
+          <div class="setting">
+            <label for="image-draw-mode">Visualization</label>
+            <select id="image-draw-mode">
+              <option value="circles">Circles</option>
+              <option value="boxes">Bounding Boxes</option>
+            </select>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-primary" id="image-submit">Run Detection</button>
+      </form>
+
+      <form id="video-form" class="upload-form hidden" data-tab-panel="video">
+        <label class="dropzone" id="video-dropzone" for="video-input">
+          <input type="file" id="video-input" name="file" accept="video/mp4,video/avi,video/quicktime" hidden />
+          <span class="dropzone-icon">📤</span>
+          <span class="dropzone-text">Drag &amp; drop a video, or click to browse</span>
+          <span class="dropzone-filename" id="video-filename"></span>
+        </label>
+
+        <div class="settings-row">
+          <div class="setting">
+            <label for="video-confidence">Confidence: <span id="video-confidence-value">0.20</span></label>
+            <input type="range" id="video-confidence" min="0.05" max="1" step="0.05" value="0.2" />
+          </div>
+          <div class="setting">
+            <label for="video-draw-mode">Visualization</label>
+            <select id="video-draw-mode">
+              <option value="circles">Circles</option>
+              <option value="boxes">Bounding Boxes</option>
+            </select>
+          </div>
+          <div class="setting">
+            <label for="video-frame-skip">Frame Skip: <span id="video-frame-skip-value">3</span></label>
+            <input type="range" id="video-frame-skip" min="1" max="10" step="1" value="3" />
+          </div>
+        </div>
+
+        <button type="submit" class="btn-primary" id="video-submit">Run Detection</button>
+      </form>
+    </section>
+
+    <section class="panel stats-panel">
+      <h2>Table Status</h2>
+      <div class="stat-cards">
+        <div class="stat-card stat-clean">
+          <span class="stat-value" id="count-clean">0</span>
+          <span class="stat-label">🟢 Clean</span>
+        </div>
+        <div class="stat-card stat-occupied">
+          <span class="stat-value" id="count-occupied">0</span>
+          <span class="stat-label">🟠 Occupied</span>
+        </div>
+        <div class="stat-card stat-dirty">
+          <span class="stat-value" id="count-dirty">0</span>
+          <span class="stat-label">🔴 Dirty</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel result-panel">
+      <h2>Result</h2>
+      <div id="status-message" class="status-message"></div>
+      <div id="loading" class="loading hidden">
+        <div class="spinner"></div>
+        <span id="loading-text">Running detection&hellip;</span>
+      </div>
+      <div id="result-container" class="result-container"></div>
+    </section>
+  </main>
+
+  <footer class="footer">Smart Cafe Table Detection &middot; FastAPI + YOLOv8</footer>
+
+  <script src="/static/script.js"></script>
+</body>
+</html>
