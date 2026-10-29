@@ -1,0 +1,2 @@
+[flake8]
+exclude = venv,model/final_model.py

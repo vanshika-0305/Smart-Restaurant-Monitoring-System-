@@ -120,6 +120,12 @@ with tab1:
         elif st.session_state.uploaded_file is not None and uploaded_file is None:
             st.session_state.uploaded_file = None
     
+    # Video display placeholder
+    video_placeholder = st.empty()
+
+    # Status text
+    status_text = st.empty()
+
     # Start/Stop button
     if not st.session_state.detection_running:
         start_button = st.button("Start Detection", use_container_width=True)
@@ -132,12 +138,6 @@ with tab1:
         stop_button = st.button("Stop Detection", use_container_width=True)
         if stop_button:
             st.session_state.detection_running = False
-    
-    # Video display placeholder
-    video_placeholder = st.empty()
-    
-    # Status text
-    status_text = st.empty()
 
     def load_model(model_path):
         try:
